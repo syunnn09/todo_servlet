@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class PageBase {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.err.println("executeをオーバーライドしてください");
+		
 	}
 
 }

@@ -24,8 +24,8 @@ public class Login extends PageBase {
 		if (user != null) {
 			HttpSession session = request.getSession();
 			session.setAttribute("user", user);
-			System.out.println("ログインが完了しました");
-		} else {
+			response.sendRedirect("/index");
+			return;
 		}
 		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/login.jsp");
 		dispatcher.forward(request, response);
