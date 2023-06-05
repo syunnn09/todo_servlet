@@ -19,7 +19,7 @@ public class TodoDao extends CommonDao {
 			ps.setInt(1, userId);
 			ResultSet rs = ps.executeQuery();
 
-			if (rs.next()) {
+			while (rs.next()) {
 				int todoId = rs.getInt("todoId");
 				String title = rs.getString("title");
 				String startTime = rs.getString("startTime");
@@ -33,5 +33,23 @@ public class TodoDao extends CommonDao {
 			e.printStackTrace();
 		}
 		return todos;
+	}
+
+	public int addTodo(int userId, String title, String startTime, String endTime, String memo) {
+		int result = 0;
+		try (Connection conn = DriverManager.getConnection(URL, USER, PASS)) {
+			String sql = "INSERT INTO todo(userId, title, startTime, endTime, memo) VALUES(?, ?, ?, ?, ?)";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, userId);
+			ps.setString(2, title);
+			ps.setString(3, startTime);
+			ps.setString(4, endTime);
+			ps.setString(5, memo);
+			result = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return result;
 	}
 }

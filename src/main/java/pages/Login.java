@@ -16,7 +16,6 @@ public class Login extends PageBase {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
-		System.out.println(email + " " + password);
 
 		UserDao userDao = new UserDao();
 		UserBean user = userDao.login(email, password);
@@ -24,9 +23,11 @@ public class Login extends PageBase {
 		if (user != null) {
 			HttpSession session = request.getSession();
 			session.setAttribute("user", user);
-			response.sendRedirect("/index");
+			System.out.println("login success");
+			response.sendRedirect("/todo/index");
 			return;
 		}
+
 		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/login.jsp");
 		dispatcher.forward(request, response);
 	}
