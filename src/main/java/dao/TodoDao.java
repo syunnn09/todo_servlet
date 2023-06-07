@@ -52,4 +52,29 @@ public class TodoDao extends CommonDao {
 
 		return result;
 	}
+
+	public TodoBean getTodo(int todoId) {
+		TodoBean bean = null;
+
+		try (Connection conn = DriverManager.getConnection(URL, USER, PASS)) {
+			String sql = "SELECT * FROM todo WHERE todoId=?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, todoId);
+
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				String title = rs.getString("title");
+				int userId = rs.getInt("userId");
+				String startTime = rs.getString("startTime");
+				String endTime = rs.getString("endTime");
+				String memo = rs.getString("memo");
+				int isCompleted = rs.getInt("isCompleted");
+
+				bean = new TodoBean(todoId, userId, title, startTime, endTime, memo, isCompleted);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return bean;
+	}
 }

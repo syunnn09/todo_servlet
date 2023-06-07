@@ -26,12 +26,12 @@ public class TodoServlet extends HttpServlet {
        
 	private final String URI_PREFIX = "/todo/";
 
-	Map<String, PageBase> map = new HashMap<String, PageBase>(){
-		{
-			put(URI_PREFIX + "index", new Index());
-			put(URI_PREFIX + "add", new Add());
-		}
-	};
+	Map<String, PageBase> map = new HashMap<String, PageBase>();
+
+	public void init() {
+		this.map.put(URI_PREFIX + "index", new Index());
+		this.map.put(URI_PREFIX + "add", new Add());
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
